@@ -128,6 +128,8 @@ def GetArticleList(jsondir):
                     ArtList.append(art)
                     print(len(ArtList),pubdate, idx, title)
     return ArtList
+
+
 if __name__ == "__main__":
     dir = "C:/vWeChatFiles/rawlist/Dump-0805-15-00-45" #改成你自己的文件夹地址
     saveHtmlDir = "c:/vWeChatFiles/html/" #改成你自己的保存目录，如果没有要新建
