@@ -3,53 +3,53 @@
 
 
 
-QQ交流群 703431832 ,加群暗号"不止技术流"  
+QQ交流群 703431832  加群暗号"不止技术流"  
 
 # 使用步骤：  
 ## a.安装Python
 通过 pip install requirements.txt 安装本项目需要的库。  
 ## b.安装并配置Fiddler  
 Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装  
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602070412.png)  
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602070412.png)  
 
 会弹出几个窗口，都点 Yes  
 
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602072832.png)  
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602072832.png)  
 
 最后是这样的，打了 3 个钩。点 OK 保存即可。  
 
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602075168.png)  
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602075168.png)  
 
 在主窗口右侧按下图所示设置
 
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/201908060209546.png)  
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/201908060209546.png)  
 
 其中需要填的网址为 mp.weixin.qq.com/mp/profile_ext?action=getms  
 
-至此配置完成了，点软件左下角的方块，会显示Capturing ，表示它此时处在可以抓取数据的状态，再点一下会暂停抓取。此处先打开为抓取状态
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602082132.png)  
+至此配置完成了，点软件左下角的方块，会显示Capturing ，表示它此时处在可以抓取数据的状态，再点一下会暂停抓取。此处先打开为抓取状态  
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602082132.png)  
 
 ## c.打开某个微信公众号的历史文章列表
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602060364.png) 
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602060364.png) 
 
 不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
 
-看Fiddler中显示了我们需要的请求  
+Fiddler中显示了我们需要的请求  
 
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602101979.png) 
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602101979.png) 
 
-把这些请求保存下来  
+把这些请求保存下来，基中包含文章url列表  
 
-![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105916.png) 
-![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105929.png) 
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105916.png) 
+![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105929.png) 
 
 ## d.运行python文件
-打开本项目的config.json文件，设置  
-- jsonDir：Fiddler生成的文件  
+打开本项目的 config.json 文件，设置  
+- jsonDir：上面在Fiddler中保存的文件  
 - htmlDir：保存html的目录，路径中不能有空格  
 - pdfDir：保存pdf的目录，路径中不能有空格  
 记得保存  
-wkhtmltopdf.exe文件是html转pdf用的，位置不要动。  
+另外wkhtmltopdf.exe文件是html转pdf用的，位置不要动。  
 
 
 运行 python start.py      #开始下载html  
