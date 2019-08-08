@@ -5,10 +5,10 @@
 
 QQ交流群 703431832 ,加群暗号"不止技术流"  
 
-#使用步骤：  
-##a.安装Python
+# 使用步骤：  
+## a.安装Python
 通过 pip install requirements.txt 安装本项目需要的库。  
-##b.安装并配置Fiddler  
+## b.安装并配置Fiddler  
 Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装  
 ![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602070412.png)  
 
@@ -29,7 +29,7 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 至此配置完成了，点软件左下角的方块，会显示Capturing ，表示它此时处在可以抓取数据的状态，再点一下会暂停抓取。此处先打开为抓取状态
 ![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602082132.png)  
 
-##c.打开某个微信公众号的历史文章列表
+## c.打开某个微信公众号的历史文章列表
 ![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602060364.png) 
 
 不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
@@ -56,9 +56,9 @@ wkhtmltopdf.exe文件是html转pdf用的，位置不要动。
 运行 python start.py pdf  #把下载的html转pdf  
 
 
-##补充
+## 补充
 
-企业想直接付费使用全功能版的可直达 [https://www.xiaokuake.com](https://www.xiaokuake.com) 或添加作者微信 kakaLongcn
+企业想直接付费使用全功能版及其他公众号相关功能定制的可直达 [https://www.xiaokuake.com](https://www.xiaokuake.com) 或添加作者微信 kakaLongcn
 
 本开源项目仅用于技术学习交流，请勿用于非法用途，由此引起的后果本作者概不负责。
 
