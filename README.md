@@ -1,6 +1,7 @@
 # vWeChatCrawl-小V公众号文章下载(开源版)
-批量导出任意微信公众号历史文章，稍有python基础的人都能搞定。  
-
+批量导出任意微信公众号历史文章，会用python写hello world就会用这个。  
+# 注意：
+github在国内访问有时很缓慢，特别是图片，我把本说明文档同步放到了我的[个人博客](https://www.xiaokuake.com/p/?p=1102&preview=true) ，项目中用到的 wkhtmltopdf可以[点此下载](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080810033092.rar)后把wkhtmltopdf复制到本项目的目录下。
 
 
 QQ交流群 703431832  加群暗号"不止技术流"  
@@ -49,7 +50,7 @@ Fiddler中显示了我们需要的请求
 - htmlDir：保存html的目录，路径中不能有空格  
 - pdfDir：保存pdf的目录，路径中不能有空格  
 记得保存  
-另外wkhtmltopdf.exe文件是html转pdf用的，位置不要动。  
+另外wkhtmltopdf.exe文件是html转pdf用的，位置不要动。
 
 
 运行 python start.py      #开始下载html  
