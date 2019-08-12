@@ -55,7 +55,14 @@ def DownLoadHtml(url):
 
 #将图片从远程下载保存到本地
 def DownImg(url,savepath):
-    r = requests.get(url)
+	#构造请求头
+    headers = {
+                     'User-Agent':'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
+                     'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                     'Connection':'keep-alive',
+                     'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
+              } 
+    r = requests.get(url,headers = headers)
     with open(savepath, 'wb') as f:
         f.write(r.content)
 

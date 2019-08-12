@@ -1,15 +1,15 @@
 # vWeChatCrawl-小V公众号文章下载(开源版)
 批量导出任意微信公众号历史文章，会用python写hello world就会用这个。  
 # 注意：
-github在国内访问有时很缓慢，特别是图片，我把本说明文档同步放到了我的[个人博客](https://www.xiaokuake.com/p/?p=1102&preview=true) 
+github在国内访问有时很缓慢，特别是图片，我把本说明文档同步放到了我的[个人博客](https://www.xiaokuake.com/p/?p=1102&preview=true)  
 项目中用到的wkhtmltopdf如果从github下载慢也可以[点此下载](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080810033092.rar)后把wkhtmltopdf复制到本项目的目录下。
 
 
 QQ交流群 703431832  加群暗号"不止技术流"  
 
 # 使用步骤：  
-## a.安装Python
-通过 pip install requirements.txt 安装本项目需要的库。  
+## a.安装Python库
+直接 python setupPackage.py 安装本项目需要的库。有朋友反映默认源安装慢，这里我用了豆瓣的源。  
 ## b.安装并配置Fiddler  
 Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装  
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602070412.png)  
@@ -22,11 +22,10 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602075168.png)  
 
-在主窗口右侧按下图所示设置
+在主窗口右侧按下图所示设置，其中需要填的网址为 mp.weixin.qq.com/mp/profile_ext?action=getms
 
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/201908060209546.png)  
 
-其中需要填的网址为 mp.weixin.qq.com/mp/profile_ext?action=getms  
 
 至此配置完成了，点软件左下角的方块，会显示Capturing ，表示它此时处在可以抓取数据的状态，再点一下会暂停抓取。此处先打开为抓取状态  
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602082132.png)  
@@ -50,8 +49,8 @@ Fiddler中显示了我们需要的请求
 - jsonDir：上面在Fiddler中保存的文件  
 - htmlDir：保存html的目录，路径中不能有空格  
 - pdfDir：保存pdf的目录，路径中不能有空格  
-记得保存  
-另外wkhtmltopdf.exe文件是html转pdf用的，位置不要动。
+改完记得保存文件  
+
 
 
 运行 python start.py      #开始下载html  
@@ -60,7 +59,7 @@ Fiddler中显示了我们需要的请求
 
 ## 补充
 
-企业想直接付费使用全功能版及其他公众号相关功能定制的可直达 [https://www.xiaokuake.com](https://www.xiaokuake.com) 或添加作者微信 kakaLongcn
+想直接付费使用全功能版及其他公众号相关功能定制的可直达 [https://www.xiaokuake.com](https://www.xiaokuake.com) 软件有免费试用，或添加作者微信 kakaLongcn
 
 本开源项目仅用于技术学习交流，请勿用于非法用途，由此引起的后果本作者概不负责。
 
