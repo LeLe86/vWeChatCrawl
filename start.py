@@ -227,14 +227,13 @@ def PDFOne(htmlpath,pdfpath,skipExists=True,removehtml=True):
     if removehtml:
         os.remove(htmlpath)
 
+
     """
             先去config.json文件设置
             jsonDir：Fiddler生成的文件
             htmlDir：保存html的目录，路径中不能有空格
             pdfDir：保存pdf的目录，路径中不能有空格
     """
-
-
 if __name__ == "__main__":
     if len(sys.argv)==1:
         arg = None
