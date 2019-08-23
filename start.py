@@ -31,7 +31,8 @@ def Timestamp2Datetime(stampstr):
 
 #初始化环境
 def GetJson():
-    jstxt =ReadFile("config.json")
+    jstxt = ReadFile("config.json")
+    jstxt = jstxt.replace("\\\\","/").replace("\\","/") #防止json中有 / 导致无法识别
     jsbd = json.loads(jstxt)
     return jsbd
 
@@ -46,7 +47,7 @@ def DownLoadHtml(url):
                      'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
               } 
      
-    response = requests.get(url,headers = headers)
+    response = requests.get(url,headers = headers,proxies=None)
     if response.status_code == 200:
         htmltxt = response.text #返回的网页正文
         return htmltxt
@@ -62,7 +63,7 @@ def DownImg(url,savepath):
                      'Connection':'keep-alive',
                      'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
               } 
-    r = requests.get(url,headers = headers)
+    r = requests.get(url,headers = headers,proxies=None)
     with open(savepath, 'wb') as f:
         f.write(r.content)
 
