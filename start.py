@@ -128,26 +128,27 @@ def GetArticleList(jsondir):
         for item in list: #一个item里可能有多篇文章
             artidx = 1 #请注意这里的编号只是为了保存html方便，并不对应于真实的文章发文位置(比如头条、次条、3条)
             comm_msg_info = item["comm_msg_info"]
-            app_msg_ext_info = item["app_msg_ext_info"]
+            
             pubstamp = comm_msg_info["datetime"]
             pubdate = Timestamp2Datetime(pubstamp)
             if comm_msg_info["type"] == 49: #49为普通图文类型，还有其他类型，暂不考虑
+                app_msg_ext_info = item["app_msg_ext_info"]
                 url = app_msg_ext_info["content_url"] #文章链接
                 idx = artidx
                 title = app_msg_ext_info["title"]
                 art = Article(url,pubdate,idx,title)
                 ArtList.append(art)
                 print(len(ArtList),pubdate, idx, title)
-            if app_msg_ext_info["is_multi"] == 1: # 一次发多篇
-                artidx += 1
-                multi_app_msg_item_list = app_msg_ext_info["multi_app_msg_item_list"]
-                for subArt in multi_app_msg_item_list:
-                    url =subArt["content_url"]
-                    idx =artidx
-                    title = subArt["title"]
-                    art = Article(url,pubdate,idx,title)
-                    ArtList.append(art)
-                    print(len(ArtList),pubdate, idx, title)
+                if app_msg_ext_info["is_multi"] == 1: # 一次发多篇
+                    artidx += 1
+                    multi_app_msg_item_list = app_msg_ext_info["multi_app_msg_item_list"]
+                    for subArt in multi_app_msg_item_list:
+                      url =subArt["content_url"]
+                      idx =artidx
+                      title = subArt["title"]
+                      art = Article(url,pubdate,idx,title)
+                      ArtList.append(art)
+                      print(len(ArtList),pubdate, idx, title)
     return ArtList
 
 def DownHtmlMain(jsonDir,saveHtmlDir):
