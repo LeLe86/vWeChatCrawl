@@ -96,6 +96,7 @@ def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
         else :
             img.attrs["src"] = ""
     ChangeCssSrc(bs) #修改link标签
+    ChangeContent(bs) #修改js_content的style，使正文能正常显示
     return str(bs) #将BeautifulSoup对象再转换为字符串，用于保存
 
 def ChangeCssSrc(bs):
@@ -105,7 +106,11 @@ def ChangeCssSrc(bs):
         if href.startswith("//"):
             newhref = "http:" + href
             link.attrs["href"] = newhref
-
+            
+def ChangeContent(bs):
+    jscontent = bs.find(id="js_content")
+    jscontent.attrs["style"]=""
+    
 #文章类
 class Article():
     def __init__(self,url,pubdate,idx,title):
