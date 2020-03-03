@@ -31,6 +31,8 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 至此配置完成了，点软件左下角的方块，会显示Capturing ，表示它此时处在可以抓取数据的状态，再点一下会暂停抓取。此处先打开为抓取状态  
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602082132.png)  
 
+有的朋友可能会在Fiddler 中抓取不到Https请求，请仔细按照上面流程检查。若有其他异常，绝大多数Fiddler相关的问题通过百度可以解决。
+
 ## c.打开某个微信公众号的历史文章列表
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602060364.png) 
 
