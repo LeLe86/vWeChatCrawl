@@ -77,6 +77,6 @@ Fiddler中显示了我们需要的请求
 [一步步教你打造文章爬虫(3)-批量下载
 ](https://mp.weixin.qq.com/s?__biz=MzAxMDM4MTA2MA==&mid=2455304632&idx=1&sn=d0a1f6ef7e5d4356d17219a2b79f65d4&chksm=8cfd6bd3bb8ae2c532f901e11aa4b080c19f16626f0dceb291fcb8270e2d7689d7b97d232683&token=2137480545&lang=zh_CN#rd)  
 
-#其他接口：
+# 其他接口：
 实时推送公众号最新文章列表，即用户发送post请求，传入公众号列表，服务器返回相应的公众号文章链接、标题、发布时间等列表。详情查看项目中的 fetchNewArticle.py文件。
 
