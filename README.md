@@ -59,6 +59,7 @@ Fiddler中显示了我们需要的请求
 运行 python start.py      #开始下载html  
 运行 python start.py pdf  #把下载的html转pdf  
 
+上文中没提到的文件是实现其他功能的(作者偷懒把好几个项目都放在了这里)，感兴趣的可了解，不感兴趣的也并不影响使用你使用上文所述的功能。
 
 ## 补充
 
@@ -75,4 +76,7 @@ Fiddler中显示了我们需要的请求
 特别要仔细看第3篇  
 [一步步教你打造文章爬虫(3)-批量下载
 ](https://mp.weixin.qq.com/s?__biz=MzAxMDM4MTA2MA==&mid=2455304632&idx=1&sn=d0a1f6ef7e5d4356d17219a2b79f65d4&chksm=8cfd6bd3bb8ae2c532f901e11aa4b080c19f16626f0dceb291fcb8270e2d7689d7b97d232683&token=2137480545&lang=zh_CN#rd)  
+
+#其他接口：
+实时推送公众号最新文章列表，即用户发送post请求，传入公众号列表，服务器返回相应的公众号文章链接、标题、发布时间等列表。详情查看项目中的 fetchNewArticle.py文件。
 
