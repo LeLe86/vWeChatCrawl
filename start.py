@@ -52,12 +52,19 @@ def DownLoadHtml(url):
                      'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
               } 
     requests.packages.urllib3.disable_warnings()
-    response = requests.get(url,headers = headers,proxies=None,verify=False)
-    if response.status_code == 200:
-        htmltxt = response.text #返回的网页正文
-        return htmltxt
-    else:
-        return None
+    
+    #使用try……except抓取错误并跳过，避免中断
+    try:
+        response = requests.get(url,headers = headers,proxies=None,verify=False)
+        if response.status_code == 200:
+            htmltxt = response.text #返回的网页正文
+            return htmltxt
+        else:
+            return None
+    except Exception as e:
+        print("\n出现错误，错误如下："+str(e))
+        print("----------------------跳过--------------------")
+        pass
 
 #将图片从远程下载保存到本地
 def DownImg(url,savepath):
@@ -69,9 +76,17 @@ def DownImg(url,savepath):
                      'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
               } 
     requests.packages.urllib3.disable_warnings()
-    r = requests.get(url,headers = headers,proxies=None,verify=False)
-    with open(savepath, 'wb') as f:
-        f.write(r.content)
+    
+    
+    #使用try……except抓取错误并跳过，避免中断
+    try:
+        r = requests.get(url,headers = headers,proxies=None,verify=False)
+        with open(savepath, 'wb') as f:
+            f.write(r.content)
+    except Exception as e:
+        print("\n出现错误，错误如下："+str(e))
+        print("----------------------跳过--------------------")
+        pass
 
 #修改网页中图片的src，使图片能正常显示
 def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
@@ -103,8 +118,23 @@ def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
             img.attrs["src"] = ""
     ChangeCssSrc(bs) #修改link标签
     ChangeContent(bs) #修改js_content的style，使正文能正常显示
-    return str(bs) #将BeautifulSoup对象再转换为字符串，用于保存
-
+    
+    #try……except抓取错误并跳过，避免中断
+    try:        
+        #bs转为str过程中容易出现问题，暂未研究治本方法
+        return str(bs) #将BeautifulSoup对象再转换为字符串，用于保存
+        
+    #出现错误maximum recursion depth exceeded while calling a Python object
+    except Exception as e:     
+        print("\n出现错误，错误如下："+str(e))
+        error="maximum recursion depth exceeded while calling a Python object"
+        if str(e)==error:
+           maximum_value = int(sys.getrecursionlimit())
+           sys.setrecursionlimit(2*maximum_value)#最大深度乘以2
+           print("最大递归深度已调整为："+str(2*maximum_value))
+        return str(bs)
+        
+        
 def ChangeCssSrc(bs):
     linkList = bs.findAll("link")
     for link in linkList:
@@ -188,11 +218,13 @@ def DownHtmlMain(jsonDir,saveHtmlDir):
         if os.path.exists(arthtmlsavepath):
             print("exists",arthtmlsavepath)
             continue
+            
         arthtmlstr = DownLoadHtml(art.url)
+
+        
         arthtmlstr = ChangeImgSrc(arthtmlstr,saveImgDir,artname)
         print("\r",end="")
         SaveFile(arthtmlsavepath,arthtmlstr)
-
         sleep(3) #防止下载过快被微信屏蔽，间隔3秒下载一篇
 
 #把一个文件夹下的html文件都转为pdf
@@ -221,7 +253,21 @@ def PDFDir(htmldir,pdfdir):
             注意此处去掉了css(link），如果发现pdf格式乱了可以不去掉css
         """
         [s.extract() for s in bs(["script", "iframe", "link"])]
-        SaveFile(tmppath, str(bs))
+        
+        #try……except抓取错误并跳过，避免中断
+        try:        
+            SaveFile(tmppath, str(bs)) #bs转为str容易出现递归深度问题
+            
+        #出现错误maximum recursion depth exceeded while calling a Python object
+        except Exception as e:     
+            print("\n出现错误，错误如下："+str(e))
+            error="maximum recursion depth exceeded while calling a Python object"
+            if str(e)==error:
+               maximum_value = int(sys.getrecursionlimit())
+               sys.setrecursionlimit(2*maximum_value)#最大递归深度乘以2
+               print("最大递归深度已调整为："+str(2*maximum_value))
+            SaveFile(tmppath, str(bs))        
+        #SaveFile(tmppath, str(bs))
         PDFOne(tmppath,pdfpath)
 
 #把一个Html文件转为pdf
@@ -240,11 +286,20 @@ def PDFOne(htmlpath,pdfpath,skipExists=True,removehtml=True):
     cmdlist.append(" " + pdfpath + " ")
     cmdstr = exepath + "".join(cmdlist)
     print(cmdstr)
-    result = subprocess.check_call(cmdstr, shell=False)
-    # stdout,stderr = result.communicate()
-    # result.wait() #等待转换完一个再转下一个
-    if removehtml:
-        os.remove(htmlpath)
+    
+    
+    #执行中出现错误subprocess.CalledProcessError: Command 'wkhtmltopdf.exe
+    #错误导致退出：Exit with code 1 due to network error: UnknownNetworkError
+    try:
+        result = subprocess.check_call(cmdstr, shell=False)
+        # stdout,stderr = result.communicate()
+        # result.wait() #等待转换完一个再转下一个
+        if removehtml:
+            os.remove(htmlpath)
+    except Exception as e:
+        print("\n出现错误，错误如下："+str(e))
+        print("----------------------跳过--------------------")
+        pass
 
 
     """
@@ -266,7 +321,7 @@ if __name__ == "__main__":
         jsbd = GetJson()
         saveHtmlDir = jsbd["htmlDir"]
         jsdir= jsbd["jsonDir"]
-        DownHtmlMain(jsdir,saveHtmlDir)
+        DownHtmlMain(jsdir,saveHtmlDir)        
     elif arg == "pdf":
         jsbd = GetJson()
         saveHtmlDir = jsbd["htmlDir"]
