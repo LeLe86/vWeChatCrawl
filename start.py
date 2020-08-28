@@ -5,24 +5,34 @@ import subprocess
 from bs4 import BeautifulSoup
 from datetime import datetime,timedelta
 from time import sleep
+from loguru import logger#导入logger
+
 
 """
 本项目开源地址 https://github.com/LeLe86/vWeChatCrawl
 讨论QQ群 703431832
 
 """
+#使用loguru来抓取log相关信息，方便后续修改
+#loguru project：https://github.com/Delgan/loguru
+logger.add(sys.stderr, format="{time} {level} {message}", filter="my_module", level="INFO")
+logger.add('log.log')
 
+
+@logger.catch
 #保存文件
 def SaveFile(fpath,fileContent):
     with open(fpath, 'w', encoding='utf-8') as f:
         f.write(fileContent)
-        
+
+@logger.catch        
 #读取文件
 def ReadFile(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         all_the_text = f.read()
     return all_the_text
 
+@logger.catch
 #时间戳转日期
 def Timestamp2Datetime(stampstr):
     dt = datetime.utcfromtimestamp(stampstr)
@@ -30,6 +40,7 @@ def Timestamp2Datetime(stampstr):
     newtimestr = dt.strftime("%Y%m%d_%H%M%S")
     return newtimestr
 
+@logger.catch
 #初始化环境
 def GetJson():
     jstxt = ReadFile("config.json")
@@ -42,6 +53,7 @@ def GetJson():
     return jsbd
 
 
+@logger.catch
 #下载url网页
 def DownLoadHtml(url):
     #构造请求头
@@ -66,6 +78,7 @@ def DownLoadHtml(url):
         print("----------------------跳过--------------------")
         pass
 
+@logger.catch
 #将图片从远程下载保存到本地
 def DownImg(url,savepath):
 	#构造请求头
@@ -88,6 +101,7 @@ def DownImg(url,savepath):
         print("----------------------跳过--------------------")
         pass
 
+@logger.catch
 #修改网页中图片的src，使图片能正常显示
 def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
     bs =BeautifulSoup(htmltxt,"lxml") #由网页源代码生成BeautifulSoup对象，第二个参数固定为lxml
@@ -134,7 +148,8 @@ def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
            print("最大递归深度已调整为："+str(2*maximum_value))
         return str(bs)
         
-        
+
+@logger.catch        
 def ChangeCssSrc(bs):
     linkList = bs.findAll("link")
     for link in linkList:
@@ -142,7 +157,8 @@ def ChangeCssSrc(bs):
         if href.startswith("//"):
             newhref = "http:" + href
             link.attrs["href"] = newhref
-            
+
+@logger.catch            
 def ChangeContent(bs):
     jscontent = bs.find(id="js_content")
     if jscontent:
@@ -158,6 +174,7 @@ class Article():
         self.idx = idx
         self.title = title
 
+@logger.catch
 #从fiddler保存的json文件中提取文章url等信息
 def GetArticleList(jsondir):
     filelist = os.listdir(jsondir)
@@ -197,6 +214,8 @@ def GetArticleList(jsondir):
                       print(len(ArtList),pubdate, idx, title)
     return ArtList
 
+
+@logger.catch
 def DownHtmlMain(jsonDir,saveHtmlDir):
     saveHtmlDir = jsbd["htmlDir"]
     if not os.path.exists(saveHtmlDir):
@@ -227,6 +246,7 @@ def DownHtmlMain(jsonDir,saveHtmlDir):
         SaveFile(arthtmlsavepath,arthtmlstr)
         sleep(3) #防止下载过快被微信屏蔽，间隔3秒下载一篇
 
+@logger.catch
 #把一个文件夹下的html文件都转为pdf
 def PDFDir(htmldir,pdfdir):
     if not os.path.exists(pdfdir):
@@ -270,6 +290,7 @@ def PDFDir(htmldir,pdfdir):
         #SaveFile(tmppath, str(bs))
         PDFOne(tmppath,pdfpath)
 
+@logger.catch
 #把一个Html文件转为pdf
 def PDFOne(htmlpath,pdfpath,skipExists=True,removehtml=True):
     if skipExists and os.path.exists(pdfpath):
@@ -313,6 +334,7 @@ def PDFOne(htmlpath,pdfpath,skipExists=True,removehtml=True):
             运行 python start.py pdf  #把下载的html转pdf 
     """
 if __name__ == "__main__":
+    
     if len(sys.argv)==1:
         arg = None
     else:
