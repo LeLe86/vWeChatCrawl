@@ -63,9 +63,11 @@ Fiddler中显示了我们需要的请求
 
 ## 补充
 
-我还开发了一个全功能版，集成了数据分析功能，可免费试用 [https://www.xiaokuake.com](https://www.xiaokuake.com?id=github)   
+可以批量抓取大量公众号的文章、阅读数等信息，欢迎企业用户商业合作 [https://www.xiaokuake.com](https://www.xiaokuake.com?id=github)   
 
-作者微信 kakaLongcn 有其他公众号相关功能/爬虫定制需求的可一起讨论 
+也可以抓取快手相关数据，目前正在开发快手直播相关的工具，也欢迎讨论
+
+作者微信 xiaov0755 有其他爬虫定制需求的可一起讨论(黑灰产不做)
 
 本开源项目仅用于技术学习交流，请勿用于非法用途，由此引起的后果本作者概不负责。
 
