@@ -1,5 +1,7 @@
 # vWeChatCrawl-小V公众号文章下载(开源版)
 批量导出任意微信公众号历史文章，会用python写hello world就会用这个。  
+配套视频教程 https://www.bilibili.com/video/BV1jv4y1f7j5/(https://www.bilibili.com/video/BV1jv4y1f7j5/)  
+
 # 注意：
 github在国内访问有时很缓慢，特别是图片，我把本说明文档同步放到了我的[个人博客](https://www.xiaokuake.com/p/?p=1102&preview=true)  
 项目中用到的wkhtmltopdf如果从github下载慢也可以[点此下载](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080810033092.rar)后把wkhtmltopdf复制到本项目的目录下。  
@@ -7,6 +9,7 @@ github在国内访问有时很缓慢，特别是图片，我把本说明文档�
 本项目的最新文章会发在公众号“不止技术流”中，欢迎关注。  
 ![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019081511223334.jpeg)  
 QQ交流群 703431832  加群暗号"不止技术流"  
+
 
 # 使用步骤：  
 ## a.安装Python库
