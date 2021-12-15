@@ -3,8 +3,10 @@
 配套视频教程 https://www.bilibili.com/video/BV1jv4y1f7j5/
 
 # 注意：
-github在国内访问有时很缓慢，特别是图片，我把本说明文档同步放到了我的[个人博客](https://www.xiaokuake.com/p/?p=1102&preview=true)  
-项目中用到的wkhtmltopdf如果从github下载慢也可以[点此下载](http://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019080810033092.rar)后把wkhtmltopdf复制到本项目的目录下。  
+暂不支持微信最新版，请从以下百度网盘中下载稍早(2021.10 月)的微信版本，安装后要从微信的设置中把自动升级选项取消。
+
+链接：https://pan.baidu.com/s/1e8Xyc0aDx19jg2LxEqxwtA
+提取码：dbt7 
 
 本项目的最新文章会发在公众号“不止技术流”中，欢迎关注。  
 ![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019081511223334.jpeg)  
