@@ -39,7 +39,7 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 有的朋友可能会在Fiddler 中抓取不到Https请求，请仔细按照上面流程检查。若有其他异常，绝大多数Fiddler相关的问题通过百度可以解决。
 
 ## c.打开某个微信公众号的历史文章列表
-![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602060364.png) 
+![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2021/08/2021080323444159.png) 
 
 不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
 
