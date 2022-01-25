@@ -181,7 +181,7 @@ def DownHtmlMain(jsonDir,saveHtmlDir):
     for art in ArtList:
         idx+=1
         artname = art.pubdate + "_" + str(art.idx)
-        arthtmlname = artname + ".html"
+        arthtmlname = art.title + ".html"
         arthtmlsavepath = saveHtmlDir+"/"+arthtmlname
         print(idx,"of",totalCount,artname,art.title)
         # 如果已经有了则跳过，便于暂停后续传
