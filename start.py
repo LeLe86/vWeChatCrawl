@@ -8,8 +8,7 @@ from time import sleep
 
 """
 本项目开源地址 https://github.com/LeLe86/vWeChatCrawl
-讨论QQ群 703431832
-
+讨论QQ群 703431832 加群暗号:不止技术流
 """
 
 #保存文件
@@ -50,9 +49,10 @@ def DownLoadHtml(url):
                      'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                      'Connection':'keep-alive',
                      'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
-              } 
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url,headers = headers,proxies=None,verify=False)
+              }
+    session = requests.Session()
+    session.trust_env = False
+    response = session.get(url,headers = headers)
     if response.status_code == 200:
         htmltxt = response.text #返回的网页正文
         return htmltxt
@@ -67,11 +67,12 @@ def DownImg(url,savepath):
                      'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                      'Connection':'keep-alive',
                      'Accept-Language':'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
-              } 
-    requests.packages.urllib3.disable_warnings()
-    r = requests.get(url,headers = headers,proxies=None,verify=False)
+              }
+    session = requests.Session()
+    session.trust_env = False
+    response = session.get(url, headers=headers)
     with open(savepath, 'wb') as f:
-        f.write(r.content)
+        f.write(response.content)
 
 #修改网页中图片的src，使图片能正常显示
 def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
@@ -89,8 +90,8 @@ def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
             originalURL = ""
         if originalURL.startswith("//"):#如果url以//开头，则需要添加http：
             originalURL = "http:" + originalURL
-        if len(originalURL) > 0:
-            print("\r down imgs " + "▇" * imgindex +" " + str(imgindex),end="")
+        if len(originalURL) > 20:
+            print("\r down imgs " + "▇" * imgindex +"  " + str(imgindex),end="")
             if "data-type" in img.attrs:
                 imgtype = img.attrs["data-type"]
             else:
@@ -133,38 +134,41 @@ def GetArticleList(jsondir):
     filelist = os.listdir(jsondir)
     ArtList = []
     for file in filelist:
-        filepath = os.path.join(jsondir,file)
-        filetxt = ReadFile(filepath)
-        jsbody = json.loads(filetxt)
-        general_msg_list = jsbody["general_msg_list"]
-        jsbd2= json.loads(general_msg_list)
-        list = jsbd2["list"]
-        for item in list: #一个item里可能有多篇文章
-            artidx = 1 #请注意这里的编号只是为了保存html方便，并不对应于真实的文章发文位置(比如头条、次条、3条)
-            comm_msg_info = item["comm_msg_info"]
-            
-            pubstamp = comm_msg_info["datetime"]
-            pubdate = Timestamp2Datetime(pubstamp)
-            if comm_msg_info["type"] == 49: #49为普通图文类型，还有其他类型，暂不考虑
-                app_msg_ext_info = item["app_msg_ext_info"]
-                url = app_msg_ext_info["content_url"] #文章链接
-                idx = artidx
-                title = app_msg_ext_info["title"]
-                art = Article(url,pubdate,idx,title)
-                if len(url)>3:#url不完整则跳过
-                    ArtList.append(art)
-                print(len(ArtList),pubdate, idx, title)
-                if app_msg_ext_info["is_multi"] == 1: # 一次发多篇
-                    artidx += 1
-                    multi_app_msg_item_list = app_msg_ext_info["multi_app_msg_item_list"]
-                    for subArt in multi_app_msg_item_list:
-                      url =subArt["content_url"]
-                      idx =artidx
-                      title = subArt["title"]
-                      art = Article(url,pubdate,idx,title)
-                      if len(url)>3:
+        try:
+            filepath = os.path.join(jsondir,file)
+            filetxt = ReadFile(filepath)
+            jsbody = json.loads(filetxt)
+            general_msg_list = jsbody["general_msg_list"]
+            jsbd2= json.loads(general_msg_list)
+            list = jsbd2["list"]
+            for item in list: #一个item里可能有多篇文章
+                artidx = 1 #请注意这里的编号只是为了保存html方便，并不对应于真实的文章发文位置(比如头条、次条、3条)
+                comm_msg_info = item["comm_msg_info"]
+
+                pubstamp = comm_msg_info["datetime"]
+                pubdate = Timestamp2Datetime(pubstamp)
+                if comm_msg_info["type"] == 49: #49为普通图文类型，还有其他类型，暂不考虑
+                    app_msg_ext_info = item["app_msg_ext_info"]
+                    url = app_msg_ext_info["content_url"] #文章链接
+                    idx = artidx
+                    title = app_msg_ext_info["title"]
+                    art = Article(url,pubdate,idx,title)
+                    if len(url)>3:#url不完整则跳过
                         ArtList.append(art)
-                      print(len(ArtList),pubdate, idx, title)
+                    print(len(ArtList),pubdate, idx, title)
+                    if app_msg_ext_info["is_multi"] == 1: # 一次发多篇
+                        artidx += 1
+                        multi_app_msg_item_list = app_msg_ext_info["multi_app_msg_item_list"]
+                        for subArt in multi_app_msg_item_list:
+                          url =subArt["content_url"]
+                          idx =artidx
+                          title = subArt["title"]
+                          art = Article(url,pubdate,idx,title)
+                          if len(url)>3:
+                            ArtList.append(art)
+                          print(len(ArtList),pubdate, idx, title)
+        except:
+            print("跳过，可不用管",file)
     return ArtList
 
 def DownHtmlMain(jsonDir,saveHtmlDir):
