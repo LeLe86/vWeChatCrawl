@@ -104,6 +104,10 @@ def ChangeImgSrc(htmltxt,saveimgdir,htmlname):
             img.attrs["src"] = ""
     ChangeCssSrc(bs) #修改link标签
     ChangeContent(bs) #修改js_content的style，使正文能正常显示
+    allscript = bs.findAll("script")
+    for script in allscript:
+        if "src" in script.attrs: #解决远程加载js失败导致打开网页很慢的问题
+            script["src"]=""
     return str(bs) #将BeautifulSoup对象再转换为字符串，用于保存
 
 def ChangeCssSrc(bs):
