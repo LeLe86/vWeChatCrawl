@@ -230,7 +230,10 @@ def PDFDir(htmldir,pdfdir):
         """
         [s.extract() for s in bs(["script", "iframe", "link"])]
         SaveFile(tmppath, str(bs))
-        PDFOne(tmppath,pdfpath)
+	try:
+            PDFOne(tmppath,pdfpath)
+	except:
+            print("转pdf失败，可能是因为标题中有特殊字符",f)
 
 #把一个Html文件转为pdf
 def PDFOne(htmlpath,pdfpath,skipExists=True,removehtml=True):
