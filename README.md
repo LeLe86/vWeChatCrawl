@@ -3,10 +3,7 @@
 配套视频教程 https://www.bilibili.com/video/BV1jv4y1f7j5/
 
 # 注意：
-暂不支持微信最新版，请从以下百度网盘中下载稍早(2021.10 月)的微信版本，安装后要从微信的设置中把自动升级选项取消。
-
-链接：https://pan.baidu.com/s/1e8Xyc0aDx19jg2LxEqxwtA
-提取码：dbt7 
+暂不支持微信最新版，
 
 本项目的最新文章会发在公众号“不止技术流”中，欢迎关注。  
 ![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019081511223334.jpeg)  
@@ -41,7 +38,23 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 ## c.打开某个微信公众号的历史文章列表
 ![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2021/08/2021080323444159.png) 
 
-不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
+如果您看到的界面跟上面的图片不对应，说明用了较新版本的微信，有2个方法：
+
+方法1
+
+人工去构造一个类似这样的公众号历史文章网址 https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5ODEzMTIxOA== ，注意要把最后部分的“MzA5ODEzMTIxOA==”换成你要下载的公众号的，这个其实是公众号的编号(以两个等号==结尾)，至于怎么获得这个编号，可以用“非微信浏览器”比发chrome或360等打开此号的任意一篇文章，右键，查看源码，然后从源码中搜索 "biz="。把拼接好的网址在微信中发给任意好友，然后从对话窗口中点开链接即可（这段操作确实有点绕，但没有更好的方法）。
+
+![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2022/05/2022050913041455.png) 
+
+
+方法2
+
+如果看不明白上面的操作，还是老老实实下载稍早(2021.10 月)点的微信版本吧，安装后要从微信的设置中把自动升级选项取消。
+
+链接：https://pan.baidu.com/s/1e8Xyc0aDx19jg2LxEqxwtA
+提取码：dbt7 
+
+不管用什么方法，打开公众号历史文章列表之后，接下来，在列表中不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
 
 Fiddler中显示了我们需要的请求  
 
@@ -50,6 +63,10 @@ Fiddler中显示了我们需要的请求
 把这些请求保存下来，基中包含文章url列表  
 
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105916.png) 
+
+如果有下面这个窗口则选Raw Files
+
+![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2022/05/2022050912413657.png) 
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105929.png) 
 
 ## d.运行python文件
