@@ -67,6 +67,7 @@ Fiddler中显示了我们需要的请求
 如果有下面这个窗口则选Raw Files
 
 ![avatar](http://www.xiaokuake.com/p/wp-content/uploads/2022/05/2022050912413657.png) 
+
 ![avatar](http://img1.xiaokuake.com/p/wp-content/uploads/2019/08/2019080602105929.png) 
 
 ## d.运行python文件
