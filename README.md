@@ -3,7 +3,6 @@
 配套视频教程 https://www.bilibili.com/video/BV1jv4y1f7j5/
 
 # 注意：
-暂不支持微信最新版，
 
 本项目的最新文章会发在公众号“不止技术流”中，欢迎关注。  
 ![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2019/08/2019081511223334.jpeg)  
@@ -42,7 +41,7 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 
 方法1
 
-[点此下载这个软件](https://www.xiaokuake.com/p/helppage.html)，用它的免费功能帮你提取出主页，操作方法在这个链接的说明文档中有.
+[点此下载这个软件](https://www.xiaokuake.com/p/helppage.html)，用它的免费功能帮你提取出主页，操作方法在这个链接的说明文档中有。如果你是纯小白也可以直接用这个软件完成你的任务，省时省力也不贵，性价比还是挺高的。
 
 
 方法2
@@ -59,7 +58,7 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 链接：https://pan.baidu.com/s/1e8Xyc0aDx19jg2LxEqxwtA
 提取码：dbt7 
 
-不管用什么方法，打开公众号历史文章列表之后，接下来，在列表中不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
+不管用什么方法，打开公众号历史文章列表之后，在列表中不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
 
 Fiddler中显示了我们需要的请求  
 
