@@ -35,7 +35,7 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 有的朋友可能会在Fiddler 中抓取不到Https请求，请仔细按照上面流程检查。若有其他异常，绝大多数Fiddler相关的问题通过百度可以解决。
 
 ## c.打开某个微信公众号的历史文章列表
-[先根据这个视频操作]([https://www.runoob.com](https://www.bilibili.com/video/BV1yu4y1n7PV/?vd_source=fe886e453cdfacf2a9224a3c545a6289))
+[先根据这个视频操作](https://www.bilibili.com/video/BV1yu4y1n7PV/) 
 
 打开公众号历史文章列表之后，在列表中不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
 
