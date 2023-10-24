@@ -35,30 +35,9 @@ Fiddler的官网有时会连不上，可去pc.qq.com搜索Fiddler4  并安装
 有的朋友可能会在Fiddler 中抓取不到Https请求，请仔细按照上面流程检查。若有其他异常，绝大多数Fiddler相关的问题通过百度可以解决。
 
 ## c.打开某个微信公众号的历史文章列表
-![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2021/08/2021080323444159.png) 
+[先根据这个视频操作]([https://www.runoob.com](https://www.bilibili.com/video/BV1yu4y1n7PV/?vd_source=fe886e453cdfacf2a9224a3c545a6289))
 
-如果您看到的界面跟上面的图片不对应，说明用了较新版本的微信，有3个方法：
-
-方法1
-
-[点此下载这个软件](https://www.xiaokuake.com/p/helppage.html)，用它的免费功能帮你提取出主页，操作方法在这个链接的说明文档中有。如果你是纯小白也可以直接用这个软件完成你的任务，省时省力也不贵，性价比还是挺高的。
-
-
-方法2
-
-人工去构造一个类似这样的公众号历史文章网址 https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5ODEzMTIxOA== ，注意要把最后部分的“MzA5ODEzMTIxOA==”换成你要下载的公众号的，这个其实是公众号的编号(以两个等号==结尾)，至于怎么获得这个编号，可以用“非微信浏览器”比发chrome或360等打开此号的任意一篇文章，右键，查看源码，然后从源码中搜索 "biz="。把拼接好的网址在微信中发给任意好友，然后从对话窗口中点开链接即可（这段操作确实有点绕，但没有更好的方法）。
-
-![avatar](https://www.xiaokuake.com/p/wp-content/uploads/2022/05/2022050913041455.png) 
-
-
-方法3
-
-如果看不明白上面的操作，还是老老实实下载稍早(2021.10 月)点的微信版本吧，安装后要从微信的设置中把自动升级选项取消。
-
-链接：https://pan.baidu.com/s/1e8Xyc0aDx19jg2LxEqxwtA
-提取码：dbt7 
-
-不管用什么方法，打开公众号历史文章列表之后，在列表中不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
+打开公众号历史文章列表之后，在列表中不断下划，使历史文章列表都显示出来，但注意不要划得太快。  
 
 Fiddler中显示了我们需要的请求  
 
