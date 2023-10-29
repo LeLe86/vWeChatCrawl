@@ -185,6 +185,10 @@ def GetArticleList(jsondir):
             print("跳过，可不用管", file)
     return ArtList
 
+# 要替换的字符
+characters_to_replace = r"\/:*?\"<>|"
+# 创建一个转换表，将需要替换的字符映射到下划线字符 "_"
+translation_table = str.maketrans(characters_to_replace, "_" * len(characters_to_replace))
 
 def DownHtmlMain(jsonDir, saveHtmlDir):
     saveHtmlDir = jsbd["htmlDir"]
@@ -200,7 +204,7 @@ def DownHtmlMain(jsonDir, saveHtmlDir):
     for art in ArtList:
         idx += 1
         artname = art.pubdate + "_" + str(art.idx)
-        arthtmlname = artname + ".html"
+        arthtmlname = artname + "_" + art.title.translate(translation_table) + ".html" # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
         arthtmlsavepath = saveHtmlDir + "/" + arthtmlname
         print(idx, "of", totalCount, artname, art.title)
         # 如果已经有了则跳过，便于暂停后续传
