@@ -5,6 +5,7 @@ import subprocess
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from time import sleep
+import random
 
 """
 本项目开源地址 https://github.com/LeLe86/vWeChatCrawl
@@ -204,8 +205,10 @@ def DownHtmlMain(jsonDir, saveHtmlDir):
     for art in ArtList:
         idx += 1
         artname = art.pubdate + "_" + str(art.idx)
-        arthtmlname = artname + "_" + art.title.translate(translation_table) + ".html" # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
+        arthtmlname = artname + "_" + art.title.translate(translation_table) + ".html"
+        #arthtmlname2 = artname + "_" + art.title.translate(translation_table) + ".html" # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
         arthtmlsavepath = saveHtmlDir + "/" + arthtmlname
+        #arthtmlsavepath2 = saveHtmlDir + "/" + arthtmlname2
         print(idx, "of", totalCount, artname, art.title)
         # 如果已经有了则跳过，便于暂停后续传
         if os.path.exists(arthtmlsavepath):
@@ -215,8 +218,9 @@ def DownHtmlMain(jsonDir, saveHtmlDir):
         arthtmlstr = ChangeImgSrc(arthtmlstr, saveImgDir, artname)
         print("\r", end="")
         SaveFile(arthtmlsavepath, arthtmlstr)
+        #SaveFile(arthtmlsavepath2, arthtmlstr)
 
-        sleep(3)  # 防止下载过快被微信屏蔽，间隔3秒下载一篇
+        sleep(random.randint(3, 10))  # 防止下载过快被微信屏蔽，间隔3秒到10秒下载一篇
 
 
 # 把一个文件夹下的html文件都转为pdf
