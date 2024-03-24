@@ -6,8 +6,19 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from time import sleep
 import random
+import atexit
 
 """
+1.设置
+先去config.json文件中设置
+jsonDir：Fiddler生成的文件
+htmlDir：保存html的目录，路径中不能有空格
+pdfDir：保存pdf的目录，路径中不能有空格
+
+2.使用方法
+运行 python start.py      #开始下载html  
+运行 python start.py pdf  #把下载的html转pdf 
+
 本项目开源地址 https://github.com/LeLe86/vWeChatCrawl
 讨论QQ群 703431832 加群暗号:不止技术流
 """
@@ -186,11 +197,13 @@ def GetArticleList(jsondir):
             print("跳过，可不用管", file)
     return ArtList
 
+
 # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
 # 要替换的字符
 characters_to_replace = r"\/:*?\"<>|"
 # 创建一个转换表，将需要替换的字符映射到下划线字符 "_"
 translation_table = str.maketrans(characters_to_replace, "_" * len(characters_to_replace))
+
 
 def DownHtmlMain(jsonDir, saveHtmlDir):
     saveHtmlDir = jsbd["htmlDir"]
@@ -206,10 +219,11 @@ def DownHtmlMain(jsonDir, saveHtmlDir):
     for art in ArtList:
         idx += 1
         artname = art.pubdate + "_" + str(art.idx)
-        arthtmlname = artname + "_" + art.title.translate(translation_table) + ".html" # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
-        #arthtmlname2 = artname + "_" + art.title.translate(translation_table) + ".html" # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
+        arthtmlname = artname + "_" + art.title.translate(
+            translation_table) + ".html"  # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
+        # arthtmlname2 = artname + "_" + art.title.translate(translation_table) + ".html" # Windows文件或目录的路径不支持\/:*?"<>|这些字符，把这些字符都转换为_字符
         arthtmlsavepath = saveHtmlDir + "/" + arthtmlname
-        #arthtmlsavepath2 = saveHtmlDir + "/" + arthtmlname2
+        # arthtmlsavepath2 = saveHtmlDir + "/" + arthtmlname2
         print(idx, "of", totalCount, artname, art.title)
         # 如果已经有了则跳过，便于暂停后续传
         if os.path.exists(arthtmlsavepath):
@@ -219,9 +233,58 @@ def DownHtmlMain(jsonDir, saveHtmlDir):
         arthtmlstr = ChangeImgSrc(arthtmlstr, saveImgDir, artname)
         print("\r", end="")
         SaveFile(arthtmlsavepath, arthtmlstr)
-        #SaveFile(arthtmlsavepath2, arthtmlstr)
+        # SaveFile(arthtmlsavepath2, arthtmlstr)
+        global logs
+        logs["articlesCount"] += 1
+        if logs["articlesCount"] >= 100:
+            # saveLogs(logsFilePath) # 已通过atexit.register注册cleanupBeforeAbruptlyExit函数实现
+            print("今天已经下载了100篇文章了，明天再下载吧......")
+            return
 
         sleep(random.randint(3, 10))  # 防止下载过快被微信屏蔽，间隔3秒到10秒下载一篇
+
+
+# 防止被微信封禁，控制一下采集速度，每天采集不要超过100页，不然现在一封就是封3个月！
+# 把今天的日期和已下载的文章数记录到一个日志文件，当前脚本start.py启动时，加载这个JSON文件，如果日期对不上，说明是新的一天，那么把
+# articlesCount的值置0，开始下载文章，直到已经下载了100篇；如果日期对得上并且articlesCount的值小于100，那么继续下载，直到已经下载了100
+# 篇
+logs = {"todaysDate": "", "articlesCount": 0}
+logsFilePath = "./logs.json"
+
+
+# 初始化logs
+def initialLogs(logsFilePath):
+    global logs
+    if os.path.exists(logsFilePath):
+        logs = loadLogs(logs, logsFilePath)
+        # 如果日期对不上，说明是新的一天，那么把ArticlesCount的值置0
+        if logs["todaysDate"] != datetime.now().strftime('%Y-%m-%d'):
+            logs["articlesCount"] = 0
+            logs["todaysDate"] = datetime.now().strftime('%Y-%m-%d')
+    else:
+        # 如果日志文件不存在，就初始化一个
+        logs = {"todaysDate": datetime.now().strftime('%Y-%m-%d'), "articlesCount": 0}
+        saveLogs(logsFilePath)
+
+
+# 保存logs到本地日志文件，序列化到一个JSON文件
+def saveLogs(logsFilePath):
+    global logs
+    with open(logsFilePath, 'w') as f:
+        json.dump(logs, f)
+
+
+# 加载本地日志文件，反序列化为一个JSON
+def loadLogs(logsFilePath):
+    global logs
+    with open(logsFilePath, 'r') as f:
+        logs = json.load(f)
+
+
+# 注册一个函数，以便在Python脚本意外退出之前保存日志
+def cleanupBeforeAbruptlyExit():
+    saveLogs(logsFilePath)
+    print("日志文件已保存......")
 
 
 # 把一个文件夹下的html文件都转为pdf
@@ -240,7 +303,9 @@ def PDFDir(htmldir, pdfdir):
         # pdf文件名中包含文章标题，但如果标题中有不能出现在文件名中的符号则会转换失败
         titleTag = bs.find(id="activity-name")
         if titleTag is not None:
-            title = "_" + titleTag.get_text().replace(" ", "").replace("  ", "").replace("\n", "").replace("|", "").replace(":", "")
+            title = "_" + titleTag.get_text().replace(" ", "").replace("  ", "").replace("\n", "").replace("|",
+                                                                                                           "").replace(
+                ":", "")
         ridx = htmlpath.rindex("/") + 1
         pdfname = htmlpath[ridx:-5] + title
         pdfpath = pdfdir + "/" + pdfname + ".pdf"
@@ -279,17 +344,6 @@ def PDFOne(htmlpath, pdfpath, skipExists=True, removehtml=True):
     if removehtml:
         os.remove(htmlpath)
 
-    """
-        1.设置：
-            先去config.json文件中设置
-            jsonDir：Fiddler生成的文件
-            htmlDir：保存html的目录，路径中不能有空格
-            pdfDir：保存pdf的目录，路径中不能有空格
-        2.使用方法：    
-            运行 python start.py      #开始下载html  
-            运行 python start.py pdf  #把下载的html转pdf 
-    """
-
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
@@ -297,6 +351,8 @@ if __name__ == "__main__":
     else:
         arg = sys.argv[1]
     if arg is None or arg == "html":
+        atexit.register(cleanupBeforeAbruptlyExit)
+        initialLogs(logsFilePath)
         jsbd = GetJson()
         saveHtmlDir = jsbd["htmlDir"]
         jsdir = jsbd["jsonDir"]
