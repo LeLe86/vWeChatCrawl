@@ -117,6 +117,7 @@ def ChangeImgSrc(htmltxt, saveimgdir, htmlname):
             imgname = htmlname + "_" + str(imgindex) + "." + imgtype  # 形如 1.png的图片名
             imgsavepath = os.path.join(saveimgdir, imgname)  # 图片保存目录
             DownImg(originalURL, imgsavepath)
+            sleep(random.randint(1, 4))  # 防止下载过快被微信屏蔽，间隔1秒到4秒下载一张图片
             img.attrs["src"] = "images/" + imgname  # 网页中图片的相对路径
         else:
             img.attrs["src"] = ""
@@ -236,27 +237,30 @@ def DownHtmlMain(jsonDir, saveHtmlDir):
         # SaveFile(arthtmlsavepath2, arthtmlstr)
         global logs
         logs["articlesCount"] += 1
-        if logs["articlesCount"] >= 100:
+        print("今天已经下载了%d篇文章了......" % logs["articlesCount"])
+        if logs["articlesCount"] >= articlesCountLimit:
             # saveLogs(logsFilePath) # 已通过atexit.register注册cleanupBeforeAbruptlyExit函数实现
-            print("今天已经下载了100篇文章了，明天再下载吧......")
+            print("今天已经下载了%d篇文章了，明天再下载吧......" % articlesCountLimit)
             return
 
         sleep(random.randint(3, 10))  # 防止下载过快被微信屏蔽，间隔3秒到10秒下载一篇
 
 
-# 防止被微信封禁，控制一下采集速度，每天采集不要超过100页，不然现在一封就是封3个月！
+# 防止被微信封禁，控制一下采集速度，每天采集最好不要超过100页，不然现在一封就是封3个月！
 # 把今天的日期和已下载的文章数记录到一个日志文件，当前脚本start.py启动时，加载这个JSON文件，如果日期对不上，说明是新的一天，那么把
 # articlesCount的值置0，开始下载文章，直到已经下载了100篇；如果日期对得上并且articlesCount的值小于100，那么继续下载，直到已经下载了100
 # 篇
 logs = {"todaysDate": "", "articlesCount": 0}
 logsFilePath = "./logs.json"
+# 设置每天下载文章数量的上限
+articlesCountLimit = 100
 
 
 # 初始化logs
 def initialLogs(logsFilePath):
     global logs
     if os.path.exists(logsFilePath):
-        logs = loadLogs(logs, logsFilePath)
+        logs = loadLogs(logsFilePath)
         # 如果日期对不上，说明是新的一天，那么把ArticlesCount的值置0
         if logs["todaysDate"] != datetime.now().strftime('%Y-%m-%d'):
             logs["articlesCount"] = 0
@@ -270,15 +274,15 @@ def initialLogs(logsFilePath):
 # 保存logs到本地日志文件，序列化到一个JSON文件
 def saveLogs(logsFilePath):
     global logs
-    with open(logsFilePath, 'w') as f:
-        json.dump(logs, f)
+    if isinstance(logs, dict):
+        with open(logsFilePath, 'w') as f:
+            json.dump(logs, f)
 
 
 # 加载本地日志文件，反序列化为一个JSON
 def loadLogs(logsFilePath):
-    global logs
     with open(logsFilePath, 'r') as f:
-        logs = json.load(f)
+        return json.load(f)
 
 
 # 注册一个函数，以便在Python脚本意外退出之前保存日志
